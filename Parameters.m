@@ -3,6 +3,7 @@ param = struct ;
 
 
 %% 
+<<<<<<< HEAD
 
 %%% Input from user
 param.x = 10; %Random values for now, change
@@ -29,4 +30,4 @@ param.dP_dx_PS=;
 param.delta_PS=;
 param.deltastar_PS=;
 param.theta_PS=;
-param.tau_w_PS=;
+param.tau_w_PS=;>>>>>>> cffb3fd6a7f0d785a017d8dc9621e5ee7db2f161
