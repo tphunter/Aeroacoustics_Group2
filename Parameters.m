@@ -8,7 +8,6 @@ function p = Parameters()
 p.x = 0.1;
 p.cl = [];
 p.cd = [];
-p.sres = 50;
 p.phi = 0;
 
 p.Mach= [];
@@ -29,4 +28,5 @@ p.deltastar_PS= [];
 p.theta_PS= [];
 p.tau_w_PS= [];
 p.phi = 0;
+p.R_0= 0;
 end 

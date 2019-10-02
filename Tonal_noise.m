@@ -1,14 +1,31 @@
 %% Tonal Noise Functions
 p = Parameters();
+a = Get_P_mB(p);
 
-phi = p.phi ;
+function P_mB = Get_P_mB(p)
 Omega = p.Omega;
+theta = p.theta;
+gamma = p.gamma;
+phi = p.phi;
+R_0 = p.R_0;
+c = p.c;
+m=p.m;
+B=p.B;
+M = p.M;
+mB=m*B;
 
 s=50;
 P_mB = [];
+
 for s=-s:1:s
-    Omegas = m*B*Omega/(m*B-s);
-    F_s = F_s[i];
-    P_mBi = i*m*B^2*Omega/(4*pi*c*R_0)*sum_-s^s*F_s*exp(-i*(m*B-s)*pi/2)*exp(i*(m*B-s)*(phi-Omega_s*R_0/c))*JmB-s(m*B*M*sin(theta))(-(m*B-s)/(m*B)*sin(gamma)/M+cos(theta)*cos(gamma));
-    p_mB = P_mB * P_mBi;
+    Omega_s = mB*Omega/(mB-s);
+    F_s = F_s(s);
+    P_mBi = F_s...
+        *exp(-1i*(mB-s)*pi/2)*exp(1i*(mB-s)*(phi-Omega_s*R_0/c))...
+        *jbessel(mB-s,mB*M*sin(theta))*...
+        (-(mB-s)/(mB)*sin(gamma)/M+cos(theta)*cos(gamma));
+    p_mB = P_mB + P_mBi;
 end
+P_mB = 1i*mB*B*Omega/(4*pi*c*R_0)*p_mB;
+end
+
