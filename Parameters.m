@@ -4,16 +4,32 @@
 %all time in [s]
 %all mass in [kg]
 function p = Parameters()
-%% 
-p.x = 0.1;
-p.cl = [];
-p.cd = [];
-p.phi = 0;
+%% POSITION
+p.x = ;
+p.y = ;
+p.z = ;
 
-p.Mach= [];
+%% INPUT PARAMETERS
+p.V=;
+p.press=101325;
+p.temp=;
+p.density=p.press/(287*p.temp);
+p.c=sqrt(p.temp*1.4*287);
+p.Mach= p.V/p.c;
+p.dynvis=;
+p.kinvis=p.dynvis/p.density;
+p.diam=;
+p.R1=p.diam*0.5;
+p.omega= (pi*6000)/30;
+p.B=;
+p.sections=;
+
 p.r_R= [];
 p.c_R= [];
+p.chord=p.c_R*p.R1;
 p.beta= [];
+p.cl = [];
+p.cd = [];
 p.shapefactor= [];
 p.U_e_SS= [];
 p.dP_dx_SS= [];
@@ -28,5 +44,16 @@ p.deltastar_PS= [];
 p.theta_PS= [];
 p.tau_w_PS= [];
 p.phi = 0;
-p.R_0= 0;
-end 
+p.k_x=p.omega/p.V;
+
+%% TONAL
+p.sres = 50;
+p.phi = 0;
+
+%% BROADBAND
+p.U_c=;
+p.u_tau=;
+p.C_f=;
+p.turb_kin_en=;
+p.diss_rate=;
+end
