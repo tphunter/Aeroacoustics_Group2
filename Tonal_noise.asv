@@ -1,6 +1,0 @@
-%% Tonal Noise Functions
-
-sres = param.sres;
-phi = param.phi ;
-s=50
-P_mB= i*m*B^2*Omega/(4*pi*c*R_0)*sum_s
