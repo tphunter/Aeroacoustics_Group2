@@ -1,5 +1,5 @@
 %% Tonal Noise Functions
-p = Parameters()
+p = Parameters();
 
 phi = p.phi ;
 Omega = p.Omega;
