@@ -3,13 +3,10 @@
 %all angles in [rad]
 %all time in [s]
 %all mass in [kg]
-
-param = struct ; 
-
-
+function p = Parameters()
 %% 
-param.x = 0.1;
-param.cl = [];
-param.cd = [];
-param.sres = 50;
-param.phi = 0;
+p.x = 0.1;
+p.cl = [];
+p.cd = [];
+p.sres = 50;
+p.phi = 0;
