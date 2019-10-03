@@ -5,13 +5,18 @@
 %all mass in [kg]
 function p = Parameters()
 %% POSITION
-p.x = ;
-p.y = ;
-p.z = ;
+p.x = 10;
+p.y = 10;
+p.z = 10;
 p.x_vector = [p.x,p.y,p.z];
+p.i = [1,0,0];
+p.j = [0,1,0];
+p.k = [0,0,1];
 p.R_0 = norm(x_vector);
-p.theta = ;
+p.theta =0 ;
 p.gamma = asin(L/D);
+p.phi = 0;
+
 
 
 %% INPUT PARAMETERS
@@ -48,12 +53,11 @@ p.delta_PS= [];
 p.deltastar_PS= [];
 p.theta_PS= [];
 p.tau_w_PS= [];
-p.phi = 0;
 p.k_x=p.omega/p.V;
 
 %% TONAL
 
-p.phi = 0;
+
 
 %% BROADBAND
 p.U_c=;

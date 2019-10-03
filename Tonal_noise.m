@@ -13,14 +13,15 @@ m=p.m;
 B=p.B;
 M = p.M;
 mB=m*B;
+F_s = fft(p.force);
 
-s=50;
 P_mB = [];
+s=50;
 
 for s=-s:1:s
     Omega_s = mB*Omega/(mB-s);
-    F_s = F_s(s);
-    P_mBi = F_s...
+    F_si = F_s(s);
+    P_mBi = F_si...
         *exp(-1i*(mB-s)*pi/2)*exp(1i*(mB-s)*(phi-Omega_s*R_0/c))...
         *jbessel(mB-s,mB*M*sin(theta))*...
         (-(mB-s)/(mB)*sin(gamma)/M+cos(theta)*cos(gamma));

@@ -1,4 +1,6 @@
-function[] = Data2()
+function [r_R,c_R,beta,cl,cd,shp_fctr,Ue_SS,dpdx_SS,delta_SS,...
+    delta_star_SS,theta_SS,tau_w_SS,Ue_PS,dpdx_PS,delta_PS,...
+    delta_star_PS,theta_PS,tau_w_PS] = Data2()
 
     fid = fopen('Data2.txt', 'rt');
     data_cell = textscan(fid, '%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f', 'Delimiter',' ');
