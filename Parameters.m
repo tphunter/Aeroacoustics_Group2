@@ -8,6 +8,11 @@ function p = Parameters()
 p.x = ;
 p.y = ;
 p.z = ;
+p.x_vector = [p.x,p.y,p.z];
+p.R_0 = norm(x_vector);
+p.theta = ;
+p.gamma = asin(L/D);
+
 
 %% INPUT PARAMETERS
 p.V=;
@@ -47,7 +52,7 @@ p.phi = 0;
 p.k_x=p.omega/p.V;
 
 %% TONAL
-p.sres = 50;
+
 p.phi = 0;
 
 %% BROADBAND
