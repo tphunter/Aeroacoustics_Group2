@@ -11,7 +11,7 @@ fclose(fid);
 
 %% POSITION
 
-p.R_0 = 10;
+p.R_0 = 1;
 p.theta = 0;
 p.phi = 0;
 p.pref = 2E-5;
@@ -48,13 +48,13 @@ p.beta = data_cell{1,3};
 p.cl = data_cell{1,4};
 p.cd = data_cell{1,5};
 p.shapefactor = data_cell{1,6};
-p.U_e_SS = data_cell{1,7};
+p.U_c_SS = data_cell{1,7};
 p.dP_dx_SS = data_cell{1,8};
 p.delta_SS = data_cell{1,9};
 p.deltastar_SS = data_cell{1,10};
 p.theta_SS = data_cell{1,11};
 p.tau_w_SS = data_cell{1,12};
-p.U_e_PS = data_cell{1,13};
+p.U_c_PS = data_cell{1,13}; %U_e = U_c
 p.dP_dx_PS = data_cell{1,14};
 p.delta_PS = data_cell{1,15};
 p.deltastar_PS = data_cell{1,16};
