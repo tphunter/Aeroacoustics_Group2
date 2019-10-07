@@ -21,6 +21,7 @@ p.k = [0,0,1];
 p.R_0 = norm(p.x_vector);
 p.theta = acos(p.z/p.R_0);
 p.phi = atan(p.y/p.x);
+p.pref = 2E-5;
 
 
 

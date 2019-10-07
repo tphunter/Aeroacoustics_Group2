@@ -15,7 +15,7 @@ B(n)=k_bar_x(n)-p.Mach*mu_bar(n)+k_bar(n);
 C(n)=k_bar_x(n)-mu_bar(n)*(p.x/sigma-p.Mach);
 theta(n)=k_bar(n)-mu_bar(n)*p.x/sigma;
 
-alpha(n)=p.V/p.U_c; %p.U_c might be a vector (for sure)
+alpha=p.V/p.U_c; %p.U_c might be a vector (for sure)
 H(n)=((1+1i).*exp(-4*1i.*k_bar(n))*(1-theta(n).^2))./(2*sqrt(pi).*...
     (alpha(n)-1).*p.k_x.*sqrt(B(n)));%k_x might be a vector
 G(n)=(1+epsilon(n)).*exp(1i.*(2.*k_bar(n)+theta(n))).*sin(theta(n)-2.*k_bar(n))./...
@@ -26,26 +26,28 @@ G(n)=(1+epsilon(n)).*exp(1i.*(2.*k_bar(n)+theta(n))).*sin(theta(n)-2.*k_bar(n)).
     +exp(2.*1i.*theta(n))/2.*sqrt(2.*k_bar(n)./theta(n)).*fresnel(2.*theta(n)).*...
     ((1-epsilon(n)).*(1+1i)./(theta(n)+2.*k_bar(n))-(1+epsilon(n)).*(1+1i)./(theta(n)-2.*k_bar(n))); %I use Fresnel cosine func
 
-I_TE_1=1i*exp(2*1i*C(n))./C(n)*((1+1i)*exp(-2*1i*C(n))*sqrt(B(n)/(B(n)-C(n)))*fresnel(2*B(n)-2*C(n))-(1+1i)*fresnel(2*B(n))+1); %I use the Fresnel integral of cosine, ask if we should use the sine one.
-I_TE_2=H*(exp(4*1i*k_bar(n))*(1-(1+1i)*fresnel(4*k_bar(n))))^epsilon(n)+H(n).*(exp(-2*1i*theta(n))+1i*(theta(n)+k_bar_x(n)+p.Mach*mu_bar(n)-k_bar(n))*G); %Take a look at definition of epsilon (slide 8 lecture 4), it should not be an exponent.
+I_TE_1(n)=1i*exp(2*1i*C(n))./C(n)*((1+1i)*exp(-2*1i*C(n))*sqrt(B(n)/(B(n)-C(n)))*fresnel(2*B(n)-2*C(n))-(1+1i)*fresnel(2*B(n))+1); %I use the Fresnel integral of cosine, ask if we should use the sine one.
+I_TE_2(n)=H(n)*(exp(4*1i*k_bar(n))*(1-(1+1i)*fresnel(4*k_bar(n))))^epsilon(n)+H(n).*(exp(-2*1i*theta(n))+1i*(theta(n)+k_bar_x(n)+p.Mach*mu_bar(n)-k_bar(n))*G(n)); %Take a look at definition of epsilon (slide 8 lecture 4), it should not be an exponent.
 
-I_TE=I_TE_1+I_TE_2;
+I_TE(n)=I_TE_1(n)+I_TE_2(n);
 
 %2.- Wall-pressure wave-number frequency spectrum
 b = 1/2.1; %Calibration constant for l_y
 kappa=0.41;
 
 %SS
-Re_T_SS=p.u_tau*p.delta_SS*sqrt(p.C_f/2)/p.kinvis;
-beta_c_SS=theta/p.tau_w_SS*p.dP_dx_SS;
-fun_PI_SS=@(PI_SS_var) 2*PI_SS_var-log(1+PI_SS_var)-kappa*p.V/...
-    p.u_tau-log(p.deltastar_SS*p.V/p.kinvis)-0.51*kappa-log(kappa);
-PI_SS = fzero(fun_PI_SS,1);
-phi_pp_omega_SS=(p.tau_w_SS^2*p.delta_star_SS/(p.V)*0.78*...
-    (1.8*PI_SS*beta_c_SS+6)*(p.omega*p.delta_star_SS/p.V)^2)/...
-    (((p.omega*p.delta_star_SS/p.V)^0.75+0.105)^3.7+...
-    (3.76*Re_T_SS^(-0.57)*(p.omega*p.delta_star_SS/p.V))^7);
-l_y_TE_SS=b*p.U_c/p.omega;
+Re_T_SS(n)=p.u_tau*p.delta_SS(n)*sqrt(p.C_f/2)/p.kinvis; %p.u_tau, p.C_f/2 might be array
+beta_c_SS(n)=theta(n)./p.tau_w_SS(n).*p.dP_dx_SS(n);
+fun_PI_SS(n)=@(PI_SS_var) 2*PI_SS_var-log(1+PI_SS_var)-kappa*p.V/...
+    p.u_tau-log(p.deltastar_SS(n)*p.V/p.kinvis)-0.51*kappa-log(kappa);
+PI_SS(n) = fzero(fun_PI_SS,1);
+
+phi_pp_omega_SS(n)=(p.tau_w_SS(n).^2.*p.deltastar_SS(n)/(p.V)*0.78*...
+    (1.8*PI_SS(n)*beta_c_SS(n)+6)*(p.omega*p.deltastar_SS(n)./p.V)^2)/...
+    (((p.omega*p.deltastar_SS(n)/p.V)^0.75+0.105)^3.7+...
+    (3.76*Re_T_SS(n)^(-0.57)*(p.omega*p.deltastar_SS(n)/p.V))^7);
+
+l_y_TE_SS=b*p.U_c/p.omega; %p.U_c
 phi_pp_SS=phi_pp_omega_SS*l_y_TE/PI_SS;
 S_pp_TE_SS=(k_bar*p.z/(2*PI_SS*sigma^2))^2*2*p.chord*...
     integral(phi_pp_SS*sin(p.R1/p.chord*(k_bar_y-k_bar*p.z/sigma))^2/...
