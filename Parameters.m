@@ -11,17 +11,18 @@ fclose(fid);
 
 %% POSITION
 
-p.x = 10;
-p.y = 10;
-p.z = 10;
+p.R_0 = 10;
+p.theta = 0;
+p.phi = 0;
+p.pref = 2E-5;
+p.x = p.R_0*sin(p.phi)*cos(p.theta);
+p.y = p.R_0*sin(p.phi)*sin(p.theta);
+p.z = p.R_0*cos(p.phi);
 p.x_vector = [p.x,p.y,p.z];
 p.i = [1,0,0];
 p.j = [0,1,0];
 p.k = [0,0,1];
-p.R_0 = norm(p.x_vector);
-p.theta = acos(p.z/p.R_0);
-p.phi = atan(p.y/p.x);
-p.pref = 2E-5;
+
 
 
 
