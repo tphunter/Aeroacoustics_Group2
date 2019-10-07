@@ -13,6 +13,7 @@ m=p.m;
 B=p.B;
 M = p.M;
 mB=m*B;
+
 F_s = fft(p.force);
 
 P_mB = [];
