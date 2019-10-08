@@ -11,8 +11,8 @@ fclose(fid);
 
 %% POSITION
 
-p.R_0 = 10;
-p.theta = 0;
+p.R_0 = 1;
+p.theta = pi/4;
 p.phi = 0;
 p.pref = 2E-5;
 p.x = p.R_0*sin(p.phi)*cos(p.theta);
