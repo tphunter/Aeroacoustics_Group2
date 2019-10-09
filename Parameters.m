@@ -28,10 +28,11 @@ p.k = [0,0,1];
 
 %% INPUT PARAMETERS
 p.V= 18;
+p.Rgas=287;
 p.press=101325;
 p.temp= 288.15;
-p.density=p.press/(287*p.temp);
-p.c=sqrt(p.temp*1.4*287);
+p.density=p.press/(p.Rgas*p.temp);
+p.c=sqrt(p.temp*p.cpcv*p.Rgas);
 p.Mach= p.V/p.c;
 p.dynvis=0.000018;
 p.kinvis=p.dynvis/p.density;
@@ -40,6 +41,7 @@ p.R1=p.diam*0.5;
 p.omega= (pi*6000)/30;
 p.B=2;
 p.sections=30;
+p.cpcv=1.4;
 
 
 p.r_R = data_cell{1,1};
