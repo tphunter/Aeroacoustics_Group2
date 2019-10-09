@@ -8,13 +8,14 @@ p = Parameters();
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
 P=[];
-for m = 1:200
+mobj = 500;
+for m = 1:mobj
     P = [P ,Get_P_mB(p,m)];
 end
       
 
         
-plot(abs(real(P)), abs(imag(P)),'x')
+plot(linspace(0,mobj*p.B,length(P)), abs(P),'x')
 
 function P_mBfinal = Get_P_mB(p,m)
 Omega = p.omega;
@@ -30,21 +31,23 @@ cl = p.cl;
 cd = p.cd;
 force = sqrt(cd.^2+cl.^2);
 gamma = atan(cd./cl);
-resolution = 201;
+resolution = 101;
 n= resolution;
-t = 0:4*pi/Omega/n:4*pi/Omega-4*pi/Omega/n;
+t = linspace(0,2*pi/Omega,n);
 
 P_mBfinal = [];
 for i = 1:length(force)
     P_mB = 0;
     F_s = 0;
-    force_i = force(i) + 0.1*sin(2*pi*t*30);%*p.r_R(i); %*(0.5-rand(n,1));%
-    plot(linspace(0,2*pi/Omega-2*pi/Omega/n,length(force_i)),force_i)
-    fshift = (-n/2:n/2-1)*(400/n);
+    force_i = 1 + 1*p.r_R(i)*(normrnd(0,1,[n,1]));%*sin(t*4*Omega)
+%     plot(t,force_i)
+    
     F_s = fft(force_i,n);
+    f = (0:length(F_s)-1)*300/length(F_s);
+%     plot(f, abs(F_s))
+    F_s = abs(fftshift(F_s));
+    fshift = (-n/2:n/2-1)*(300/n);    
 %     plot(fshift, F_s)
-    F_s = abs(fftshift(F_s));    
-    plot(fshift, F_s)
     
     gamma_i = gamma(i);
     M = p.r_R(i)*p.R1*Omega/p.c;
