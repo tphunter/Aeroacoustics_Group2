@@ -70,7 +70,7 @@ p.k_x=p.omega/p.V;
 
 
 %% BROADBAND
-p.U_c=1;
+p.U_c=0.7*p.V;
 p.u_tau=1;
 p.C_f=1;
 p.turb_kin_en=1;
