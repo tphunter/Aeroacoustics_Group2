@@ -1,11 +1,21 @@
 %% Tonal Noise Functions
 p = Parameters();
-m = 1;
-a = Get_P_mB(p,m);
-freq = real(a);
-ampl = imag(a);
-plot( freq, ampl)
+% m = 2000;
+% a = Get_P_mB(p,m);
+% freq = abs(real(a));
+% ampl = abs(imag(a));
+% %freq = real(a);
+% %ampl = imag(a);
+% plot( freq, ampl , 'x')
+P=[];
+for m = 1:2000:1
+    P = [P ,
+        Get_P_mB(p,m)];
+end
+      
 
+        
+plot(abs(real(P)), abs(imag(P)))
 
 function P_mBfinal = Get_P_mB(p,m)
 Omega = p.omega;
@@ -21,19 +31,23 @@ cl = p.cl;
 cd = p.cd;
 force = sqrt(cd.^2+cl.^2);
 gamma = atan(cd./cl);
-resolution = 101;
+resolution = 10001;
+n= resolution;
+t = linspace(0,10,n);
 
 P_mBfinal = [];
 for i = 1:length(force)
     P_mB = 0;
     F_s = 0;
-    force_i = force(i) + 0.1*sin(linspace(0,2*pi,resolution)); %*p.r_R(i)*(0.5-rand(10,1));
+    force_i = force(i) + 0.1*(0.5-rand(n,1));%*sin(2*pi*t*30)*p.r_R(i); %
     F_s = fft(force_i,resolution);
-    plot(linspace(-5,5,length(F_s)), F_s)
+    F_s = fftshift(F_s);
+    fshift = (-n/2:n/2-1)*(5000/n);
+    %plot(fshift, F_s)
     %plot(linspace(-1000,1000,length(F_s)),force_i)
     gamma_i = gamma(i);
     M = p.r_R(i)*p.R1*Omega/p.c;
-    s=floor(0.5*length(F_s));
+    s=floor(0.5*length(fshift));
     p_mB = 0;
     for si=-s:1:s
         if si ~= mB
