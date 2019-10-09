@@ -73,8 +73,6 @@ p.k_x=p.omega/p.V;
 p.U_c=0.7*p.V;
 p.u_tau=1;
 p.C_f=1;
-p.turb_kin_en=1;
-p.diss_rate=1;
 p.k_y = 1;
 p.beta = 1;
 end

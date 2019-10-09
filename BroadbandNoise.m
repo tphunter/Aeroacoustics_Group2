@@ -6,12 +6,14 @@ for n=1:p.sections
 %% TRAILING EDGE
 tic;
 %1.- Radiation integral
-k_bar(n) = p.omega.*p.chord(n)./(2.*p.c);
+
+k_bar(n) = @(freq) freq.*p.chord(n)./(2.*p.c);
+
 epsilon(n)=1./sqrt(1+1./(4.*k_bar(n)));
 sigma=sqrt(p.x.^2+(1-p.Mach.^2).*(p.y.^2+p.z.^2));
 k_bar_y(n)=p.k_y.*p.chord(n)./2; %k_y might be a vector
 k_bar_x(n)=p.k_x.*p.chord(n)./2; %k_x might be a vector
-mu_bar(n)=p.omega.*p.chord(n)./(2.*p.c.*p.beta.^2); %beta might be a vector 
+mu_bar(n)=@(freq) freq.*p.chord(n)./(2.*p.c.*p.beta.^2); %beta might be a vector 
 B(n)=k_bar_x(n)-p.Mach.*mu_bar(n)+k_bar(n);
 C(n)=k_bar_x(n)-mu_bar(n).*(p.x./sigma-p.Mach);
 theta(n)=k_bar(n)-mu_bar(n).*p.x./sigma;
@@ -99,7 +101,22 @@ intS_pp_TE_PS = @(k_bar_y) phi_pp_PS(n).*sin(p.R1./p.chord(n).*...
 S_pp_TE_PS(n)=(k_bar(n).*p.z./(2.*PI_PS(n).*sigma.^2)).^2.*2.*...
     p.chord(n).*integral(intS_pp_TE_PS,-inf,inf,'ArrayValued',1);
 
-% %% LEADING EDGE
+
+S_pp_TE(n) = S_pp_TE_SS(n) + S_pp_TE_PS(n);
+toc;
+end
+%S_pp= @(omega) S_pp_TE_PS+S_pp_TE_SS+S_pp_LE(n);
+%P_rms_BB(n)=sqrt(integral(S_pp(n),-inf,inf));
+%P_rms_total_BB = sum(P_rms_BB);
+%P_rms_total_BB_dB = 20.*log10(P_rms_total./p.pref);
+%% SUBFUNCTIONS
+function[E] = fresnel(x)
+fun = @(t) (exp(-1i.*t))./(sqrt(2.*pi.*t));
+E = integral(fun,0,x,'ArrayValued',1);
+end
+
+%% EXTRA
+% LEADING EDGE
 % 
 % %1.- Radiation integral
 % theta_plus(n)=k_bar(n)+mu_bar(n)./sigma;
@@ -132,16 +149,3 @@ S_pp_TE_PS(n)=(k_bar(n).*p.z./(2.*PI_PS(n).*sigma.^2)).^2.*2.*...
 % S_pp_LE=(p.density.*k_bar(n).*p.z./(sigma.^2)).^2.*pi.*p.V.*p.R1./2.*... %check if k_y array
 %     integral(intS_pp_LE,-inf,inf);
 % 
-S_pp_TE(n) = S_pp_TE_SS(n) + S_pp_TE_PS(n);
-toc;
-end
-%S_pp= @(omega) S_pp_TE_PS+S_pp_TE_SS+S_pp_LE(n);
-%P_rms_BB(n)=sqrt(integral(S_pp(n),-inf,inf));
-%P_rms_total_BB = sum(P_rms_BB);
-%P_rms_total_BB_dB = 20.*log10(P_rms_total./p.pref);
-%% SUBFUNCTIONS
-function[E] = fresnel(x)
-fun = @(t) (exp(-1i.*t))./(sqrt(2.*pi.*t));
-E = integral(fun,0,x,'ArrayValued',1);
-end
-
