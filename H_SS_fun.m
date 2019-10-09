@@ -7,5 +7,5 @@ function[H_SS] = H_SS_fun(p,n)
     alpha_SS = p.V./p.U_c;
     
     H_SS = @(freq) ((1+1i).*exp(-4.*1i.*kappa_bar).*(1-Theta_minus.^2))./(2.*sqrt(pi).*...
-    (alpha_SS-1).*p.k_bar_x.*sqrt(B_SS));%k_x might be a vector; %Maybe change M
+    (alpha_SS-1).*k_bar_x.*sqrt(B_SS));%k_x might be a vector; %Maybe change M
 end
