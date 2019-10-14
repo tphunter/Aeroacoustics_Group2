@@ -42,7 +42,7 @@ P_mBfinal = [];
 for i = 1:length(force)
     P_mB = 0;
     F_s = 0;
-    force_i = force(i) - 2*p.r_R(i)*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
+    force_i = force(i) - 0*2*p.r_R(i)*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
 %     plot(t(1:50),force_i(1:50))
     
     F_s = fft(force_i,n);
