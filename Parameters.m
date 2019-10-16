@@ -28,6 +28,7 @@ p.k = [0,0,1];
 
 %% INPUT PARAMETERS
 p.V= 18;
+p.cpcv=1.4;
 p.Rgas=287;
 p.press=101325;
 p.temp= 288.15;
@@ -41,7 +42,7 @@ p.R1=p.diam*0.5;
 p.omega= (pi*6000)/30;
 p.B=2;
 p.sections=30;
-p.cpcv=1.4;
+
 
 
 p.r_R = data_cell{1,1};
