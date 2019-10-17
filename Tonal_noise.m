@@ -8,7 +8,7 @@ p = Parameters();
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
 P=[];
-mobj = 25;
+mobj = 1;
 for m = 1:mobj
     P = [P ,Get_P_mB(p,m)];
 end
@@ -32,8 +32,8 @@ cd = p.cd;
 force = sqrt(cd.^2+cl.^2);
 gamma = atan(cd./cl);
 
-n= 100001;
-Fs = 10000;
+n= 1001;
+Fs = 2.1*5000;
 T = 1/Fs;
 L = n;
 t = (0:L-1)*T;%linspace(0,10*2*pi/Omega,n);
@@ -43,8 +43,8 @@ for i = 1:length(force)
     P_mB = 0;
     F_s = 0;
     force_i = 0.5*p.density*p.V^2*force(i)*p.c_R(i)^2/p.shapefactor(i);
-    force_i = force_i - sin(2*pi*200*t);%1.5*(1-p.r_R(i))*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
-%     plot(t(1:50),force_i(1:50))
+    force_i = force_i - 0.5*sin(2*pi*75*t);%1.5*(1-p.r_R(i))*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
+%     plot(t(1:500),force_i(1:500))
     
     F_s = fft(force_i,n);
     f = (0:n-1)*(Fs/n);
