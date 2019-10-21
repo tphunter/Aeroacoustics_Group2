@@ -6,7 +6,7 @@ i_freq = 1;
 i_sect=1;
 
 for freq=0:100:15000
-    for n=1:p.sections
+    for n=1:p.sections-1
         for psi=0:pi/8:15*pi/8
             
             
@@ -23,19 +23,21 @@ for freq=0:100:15000
             fun_psi_SS(i_psi) = pi/16*(freqratio(i_psi+1,i_freq,i_sect)*Spp_SS(i_psi+1,i_freq,i_sect)+freqratio(i_psi,i_freq,i_sect)*Spp_SS(i_psi,i_freq,i_sect));
             fun_psi_PS(i_psi) = pi/16*(freqratio(i_psi+1,i_freq,i_sect)*Spp_PS(i_psi+1,i_freq,i_sect)+freqratio(i_psi,i_freq,i_sect)*Spp_PS(i_psi,i_freq,i_sect));
             
-            Spp_SS_final(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_SS(i_psi));
-            Spp_PS_final(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_PS(i_psi));
+            Spp_SS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_SS(i_psi));
+            Spp_PS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_PS(i_psi));
             
             
-            Spp_final(i_freq,i_sect)=Spp_SS_final(i_freq,i_sect)+Spp_PS_final(i_freq,i_sect)
+            Spp_sect_freq(i_freq,i_sect)=Spp_SS_sect_freq(i_freq,i_sect)+Spp_PS_sect_freq(i_freq,i_sect);
             i_psi = i_psi + 1;
         end
-        Spp_
+        Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect)+Spp_sect_freq(i_freq,i_sect+1));
         i_sect=i_sect+1;
     end
     i_freq=i_freq+1;
 end
 
+freq=0:100:15000
+plodt(freq,Spp_freq)
 
 % %% TRAILING EDGE
 % tic;
