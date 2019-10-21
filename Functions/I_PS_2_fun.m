@@ -8,7 +8,7 @@ function[I_PS_2] = I_PS_2_fun(p,n,freq,psi)
     mu_bar = mu_bar_fun(p,n,freq,psi);
     Corr_epsilon = Corr_epsilon_fun(p,n,freq,psi);
     
-    I_PS_2 = H_PS.*Corr_epsilon+H_PS.*(exp(-2.*1i.*theta)...
+    I_PS_2 = H_PS.*Corr_epsilon+H_PS.*(exp(-2.*1i.*Theta_minus)...
         +1i.*(Theta_minus+k_bar_x+p.Mach.*mu_bar-k_bar).*G_PS); 
     %Take a look at definition of epsilon (slide 8 lecture 4), it should not be an exponent.%k_x might be a vector; %Maybe change M
 end

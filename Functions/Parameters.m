@@ -78,4 +78,5 @@ p.u_tau=1;
 p.C_f=1;
 p.k_y = 1;
 p.beta = 1;
+p.b=1/2.1;
 end

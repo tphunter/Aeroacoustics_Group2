@@ -3,6 +3,7 @@ function[G_SS] = G_SS_fun(p,n,freq,psi)
     Theta_minus = Theta_minus_fun(p,n,freq,psi);
     k_bar = k_bar_fun(p,n,freq,psi);
     kappa_bar = kappa_bar_fun(p,n,freq,psi);
+    epsilon=epsilon_fun(p,n,freq,psi);
     
     G_SS = (1+epsilon).*exp(1i.*(2.*kappa_bar+Theta_minus)).*sin(Theta_minus-2.*kappa_bar)./...
     (Theta_minus-2.*kappa_bar)+(1-epsilon).*exp(1i.*(-2.*kappa_bar+Theta_minus)).*...

@@ -1,43 +1,42 @@
 clc;
 clear;
 p = Parameters();
-i_psi = 1;
+i_psi = 2;
 i_freq = 1;
-i_sect=1;
+i_sect=2;
 
-for freq=0:100:15000
+for freq=0.01:100:15000
     for n=1:p.sections-1
-        for psi=0:pi/8:15*pi/8
-            
+        for psi=0:pi/2:3/2*pi
             
             Mt = p.omega*p.R1/p.c ;
-            Mz = p.M;
-            Thetha(i_psi,i_freq,i_sect) = Theta_minus_fun(p,n,freq,psi);
-            freqratio(i_psi,i_freq,i_sect) = 1 + Mt*sin(Thetha(i_psi,i_freq,i_sect))*sin(psi)/(sqrt(1-Mz^2*sin(Thetha(i_psi,i_freq,i_sect))^2));
-            freqratio(i_psi+1,i_freq,i_sect) = 1 + Mt*sin(Thetha(i_psi+1,i_freq,i_sect))*sin(psi)/(sqrt(1-Mz^2*sin(Thetha(i_psi+1,i_freq,i_sect))^2));
-            Spp_SS(i_psi,i_freq,i_sect) = Spp_SS_fun(p,n,freq,psi);
-            Spp_SS(i_psi+1,i_freq,i_sect) = Spp_SS_fun(p,n,freq,psi+pi/8);
-            Spp_PS(i_psi,i_freq,i_sect) = Spp_PS_fun(p,n,freq,psi);
-            Spp_PS(i_psi+1,i_freq,i_sect) = Spp_PS_fun(p,n,freq,psi+pi/8);
+            Mz = p.Mach;
+            Thetha(i_psi,i_freq,i_sect-1) = Theta_minus_fun(p,n,freq,psi);
+            freqratio(i_psi,i_freq,i_sect-1) = 1 + Mt*sin(Thetha(i_psi,i_freq,i_sect-1))*sin(psi)/(sqrt(1-Mz^2*sin(Thetha(i_psi,i_freq,i_sect-1))^2));
+            freqratio(i_psi-1,i_freq,i_sect-1) = 1 + Mt*sin(Thetha(i_psi-1,i_freq,i_sect-1))*sin(psi)/(sqrt(1-Mz^2*sin(Thetha(i_psi-1,i_freq,i_sect-1))^2));
+            Spp_SS(i_psi,i_freq,i_sect-1) = Spp_SS_fun(p,n,freq,psi);
+            Spp_SS(i_psi-1,i_freq,i_sect-1) = Spp_SS_fun(p,n,freq,psi-pi/8);
+            Spp_PS(i_psi,i_freq,i_sect-1) = Spp_PS_fun(p,n,freq,psi);
+            Spp_PS(i_psi-1,i_freq,i_sect-1) = Spp_PS_fun(p,n,freq,psi-pi/8);
             
-            fun_psi_SS(i_psi) = pi/16*(freqratio(i_psi+1,i_freq,i_sect)*Spp_SS(i_psi+1,i_freq,i_sect)+freqratio(i_psi,i_freq,i_sect)*Spp_SS(i_psi,i_freq,i_sect));
-            fun_psi_PS(i_psi) = pi/16*(freqratio(i_psi+1,i_freq,i_sect)*Spp_PS(i_psi+1,i_freq,i_sect)+freqratio(i_psi,i_freq,i_sect)*Spp_PS(i_psi,i_freq,i_sect));
+            fun_psi_SS(i_psi) = pi/16*(freqratio(i_psi-1,i_freq,i_sect-1)*Spp_SS(i_psi-1,i_freq,i_sect-1)+freqratio(i_psi,i_freq,i_sect-1)*Spp_SS(i_psi,i_freq,i_sect-1));
+            fun_psi_PS(i_psi) = pi/16*(freqratio(i_psi-1,i_freq,i_sect-1)*Spp_PS(i_psi-1,i_freq,i_sect-1)+freqratio(i_psi,i_freq,i_sect-1)*Spp_PS(i_psi,i_freq,i_sect-1));
             
-            Spp_SS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_SS(i_psi));
-            Spp_PS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*(sum(fun_psi_PS(i_psi));
+            Spp_SS_sect_freq(i_freq,i_sect-1) = p.B/(2*pi)*sum(fun_psi_SS);
+            Spp_PS_sect_freq(i_freq,i_sect-1) = p.B/(2*pi)*sum(fun_psi_PS);
             
             
-            Spp_sect_freq(i_freq,i_sect)=Spp_SS_sect_freq(i_freq,i_sect)+Spp_PS_sect_freq(i_freq,i_sect);
+            Spp_sect_freq(i_freq,i_sect-1)=Spp_SS_sect_freq(i_freq,i_sect-1)+Spp_PS_sect_freq(i_freq,i_sect-1);
             i_psi = i_psi + 1;
         end
-        Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect)+Spp_sect_freq(i_freq,i_sect+1));
         i_sect=i_sect+1;
     end
+    Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect)+Spp_sect_freq(i_freq,i_sect-1))
     i_freq=i_freq+1;
 end
 
 freq=0:100:15000
-plodt(freq,Spp_freq)
+plot(freq,Spp_freq)
 
 % %% TRAILING EDGE
 % tic;
