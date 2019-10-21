@@ -3,9 +3,14 @@ clear;
 p = Parameters();
 
 for n=1:p.sections
-    phi_PP_SS(n) = phi_PP_SS_fun(p,n);
-    
+    for omega=0:100:15000
+        for psi=0:pi/8:2*pi
+            
+        end
+    end
 end
+
+
 % %% TRAILING EDGE
 % tic;
 %S_pp= @(omega) S_pp_TE_PS+S_pp_TE_SS+S_pp_LE(n);
