@@ -3,10 +3,8 @@ clear;
 p = Parameters();
 
 for n=1:p.sections
-    for omega=0:100:15000
-        for psi=0:pi/8:2*pi
-            
-        end
+    for psi=0:pi/8:2*pi
+    
     end
 end
 
