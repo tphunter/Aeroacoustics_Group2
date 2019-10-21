@@ -1,10 +1,25 @@
 clc;
 clear;
 p = Parameters();
-
+i_psi = 0;
+i_freq = 0;
 for n=1:p.sections
     for psi=0:pi/8:2*pi
-    
+        for omega = 0:100:15000
+            i_psi = i_psi + 1;
+            i_freq = i_freq + 1;
+            Mt = ;
+            Mz = ;
+            Thetha(n) = Theta_minus_fun(p,n,freq,psi);
+            freq(n) = 1 + Mt*sin(Thetha(n))*sin(psi)/(sqrt(1-Mz^2*sin(Thetha(n))^2));
+            Spp_SS(n) = Spp_SS_fun(p,n,freq,psi);
+            
+            B_SS(n) = B_SS_fun(p,n,freq,psi);
+            B_SS_int = B_SS_int + freq/omega*B_SS;
+          
+            Spp_SS_final(n) = B_SS(n)/(2*pi)*B_SS_int
+        
+        end
     end
 end
 
