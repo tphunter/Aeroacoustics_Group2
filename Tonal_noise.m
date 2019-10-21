@@ -10,17 +10,17 @@ p = Parameters();
 P=[];
 mobj = 1;
 for m = 1:mobj
-    P = [P ,Get_P_mB(p,m)];
+    P = [P ,Get_P_mB(p,m, p.theta, p.phi)];
 end
       
 
         
 plot(linspace(0,mobj*p.B*p.omega/2/pi,length(P)),abs(P))% 20*log10(abs(P)/20/10^-6))
 
-function P_mBfinal = Get_P_mB(p,m)
+function P_mBfinal = Get_P_mB(p,m, theta, phi)
 Omega = p.omega;
-theta = p.theta;
-phi = p.phi;
+%theta = p.theta;
+%phi = p.phi;
 R_0 = p.R_0;
 c = p.c;
 %m=1;
