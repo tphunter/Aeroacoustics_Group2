@@ -38,6 +38,7 @@ for freq=0.01:100:15000
     end
     Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-1)+Spp_sect_freq(i_freq,i_sect-2))
     i_freq=i_freq+1;
+    toc
 end
 
 freq=0:100:15000;
