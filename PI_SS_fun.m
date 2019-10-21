@@ -1,4 +1,4 @@
-function[PI_SS] = PI_SS_fun(p,n)
+function[PI_SS] = PI_SS_fun(p,n,freq,psi)
 
 Karman = 0.41;
 
