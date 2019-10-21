@@ -110,7 +110,7 @@ end
 %P_rms_total_BB = sum(P_rms_BB);
 %P_rms_total_BB_dB = 20.*log10(P_rms_total./p.pref);
 
-freq= @(psi,freq_nondop) freq_nondop*(1+p.omega*p.R1*sin(theta)*sin(psi)/sqrt(p.cpcv*p.Rgas*p.temp*(1-p.Mach^2*sin(theta)^2))
+freq= @(psi,freq_nondop) freq_nondop*(1+p.omega*p.R1*sin(theta)*sin(psi)/sqrt(p.cpcv*p.Rgas*p.temp*(1-p.Mach^2*sin(theta)^2)))
 %% EXTRA
 % LEADING EDGE
 % 
