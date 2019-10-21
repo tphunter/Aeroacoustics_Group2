@@ -31,7 +31,7 @@ for freq=0.01:100:15000
         end
         i_sect=i_sect+1;
     end
-    Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect)+Spp_sect_freq(i_freq,i_sect-1))
+    Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-1)+Spp_sect_freq(i_freq,i_sect-2))
     i_freq=i_freq+1;
 end
 
