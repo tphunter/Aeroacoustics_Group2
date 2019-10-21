@@ -8,7 +8,7 @@ i_sect=2;
 
 
 
-for freq=0.01:100:15000
+for freq=0.01:5000:15000.01
     for n=1:p.sections-1
         tic
         for psi=0:pi/2:3/2*pi
