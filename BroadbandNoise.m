@@ -1,12 +1,16 @@
 clc;
 clear;
+warning('off','all');
 p = Parameters();
 i_psi = 2;
 i_freq = 1;
 i_sect=2;
 
+
+
 for freq=0.01:100:15000
     for n=1:p.sections-1
+        tic
         for psi=0:pi/2:3/2*pi
             
             Mt = p.omega*p.R1/p.c ;
@@ -30,12 +34,14 @@ for freq=0.01:100:15000
             i_psi = i_psi + 1;
         end
         i_sect=i_sect+1;
+        toc
     end
     Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-1)+Spp_sect_freq(i_freq,i_sect-2))
     i_freq=i_freq+1;
+    toc
 end
 
-freq=0:100:15000
+freq=0:100:15000;
 plot(freq,Spp_freq)
 
 % %% TRAILING EDGE
