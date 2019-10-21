@@ -43,10 +43,6 @@ p.R1=p.diam*0.5;
 p.omega= (pi*6000)/30;
 p.B=2;
 p.sections=30;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 
 p.r_R = data_cell{1,1};
