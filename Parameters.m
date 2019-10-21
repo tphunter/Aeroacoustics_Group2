@@ -13,6 +13,7 @@ fclose(fid);
 
 p.R_0 = 1;
 p.theta = pi/4;
+p.cpcv=1.4;
 p.phi = 0;
 p.pref = 2E-5;
 p.x = p.R_0*sin(p.phi)*cos(p.theta);
@@ -42,7 +43,10 @@ p.R1=p.diam*0.5;
 p.omega= (pi*6000)/30;
 p.B=2;
 p.sections=30;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 
 p.r_R = data_cell{1,1};
