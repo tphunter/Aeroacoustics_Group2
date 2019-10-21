@@ -8,16 +8,25 @@ p = Parameters();
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
 P=[];
-mobj = 25;
+mobj = 32;
 for m = 1:mobj
-    P = [P ,Get_P_mB(p,m, p.theta, p.phi)];
+    P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
 end
       
-
+mobj = 32;
+P2 = [];
+for m = 1:mobj
+    P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+end
         
-plot(linspace(0,mobj*p.B*p.omega/2/pi,length(P)),abs(P))% 20*log10(abs(P)/20/10^-6))
 
-function P_mBfinal = Get_P_mB(p,m, theta, phi)
+ax1 = subplot(1,2,1);
+stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
+ax2 = subplot(1,2,2);
+stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
+linkaxes([ax1,ax2],'y');
+
+function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;
 %theta = p.theta;
 %phi = p.phi;
@@ -32,7 +41,7 @@ cd = p.cd;
 force = sqrt(cd.^2+cl.^2);
 gamma = atan(cd./cl);
 
-n= 1001;
+n= 10001;
 Fs = 2.1*5000;
 T = 1/Fs;
 L = n;
@@ -42,20 +51,20 @@ P_mBfinal = [];
 for i = 1:length(force) %for i-th panel
     P_mB = 0;
     F_s = 0;
-    force_i = 0.5*p.density*p.V^2*force(i)*p.c_R(i)^2/p.shapefactor(i); %change V, 
-    force_i = force_i - 0*0.5*sin(2*pi*75*t);%1.5*(1-p.r_R(i))*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
+    force_i = force(i);%0.5*p.density*p.V^2*force(i)*p.c_R(i)^2/p.shapefactor(i); %change V, 
+    force_i = force_i - k*sin(2*pi*170*t);%1.5*(1-p.r_R(i))*sin(t*2*pi*100).^2;%(normrnd(0,6,[n,1]));%*sin(t*4*Omega)1*p.r_R(i)*
 %     plot(t(1:500),force_i(1:500))
     
     F_s = fft(force_i,n);
     f = (0:n-1)*(Fs/n);
 %     plot(f, abs(F_s/(2*pi/Omega)))
-    F_s = abs(fftshift(F_s));
+    F_s = abs(fftshift(F_s))/n;
     fshift = (-n/2:n/2-1)*(Fs/n);
-%     plot(fshift, abs(F_s))
+%     plot(linspace(-5250,5250,n), abs(F_s))
     
     gamma_i = gamma(i);
     M = p.r_R(i)*p.R1*Omega/p.c;
-    s=floor(0.5*length(fshift));
+    s=floor(0.5*n);
     p_mB = 0;
     for si=-s:1:s
         if si ~= mB
@@ -72,11 +81,11 @@ for i = 1:length(force) %for i-th panel
         if si == mB
             
             Omega_s = Omega;
-        F_si = F_s(s+mB+1);
+        F_si = F_s(s+si+1);
         
         P_mBi = F_si...
             *exp(-1i*(mB-si)*pi/2)*exp(1i*(mB-si)*(phi-Omega_s*R_0/c))...
-            *besselj(mB-si,mB*M*sin(theta))*...
+            *besselj(mB-si,mB*M*sin(theta),1)*...
             (-(mB-si)/(mB)*sin(gamma_i)/M+cos(theta)*cos(gamma_i));
         
         p_mB = p_mB+ P_mBi;
