@@ -7,7 +7,7 @@ i_freq = 1;
 i_sect=2;
 lengthpsi=4;
 
-for freq=100:1000:5100.01
+for freq=100:1000:5100
     tic
     for n=1:p.sections-1
         tic
@@ -39,6 +39,6 @@ for freq=100:1000:5100.01
     toc
 end
 
-freq=100:1000:5000;
+freq=100:1000:5100;
 plot(freq,Spp_freq)
 
