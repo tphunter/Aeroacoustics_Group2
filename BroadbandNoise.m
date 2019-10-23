@@ -32,11 +32,24 @@ for freq=100:1000:5100
         Spp_sect_freq(i_freq,i_sect-1)=Spp_SS_sect_freq(i_freq,i_sect-1)+Spp_PS_sect_freq(i_freq,i_sect-1);
         i_sect=i_sect+1;
     end
-    Spp_freq(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-2)+Spp_sect_freq(i_freq,i_sect-3));
+    Spp_freq_rad(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-2)+Spp_sect_freq(i_freq,i_sect-3));
     i_freq=i_freq+1;
     toc
 end
 
-freq=100:1000:5100;
-plot(freq,Spp_freq)
+freqSpp=100:1000:5100;
+Spp_freq=1/(2*pi)*Spp_freq_rad;
+pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
+pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
 
+index=1;
+for freqSPL=100:10:4990
+    SPL(index)=20*log10(sqrt(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10))/(2E-5));
+    index=index+1;
+end
+freqSPL=100:10:4990;
+
+figure(1)
+plot(freqSPL,SPL)
+xlabel('Frequency (Hz)')
+ylabel('SPL (dB)')
