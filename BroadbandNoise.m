@@ -7,8 +7,7 @@ i_freq = 1;
 i_sect=2;
 lengthpsi=4;
 
-
-for freq=0.01:5000:15000.01
+for freq=100:1000:5100.01
     tic
     for n=1:p.sections-1
         tic
