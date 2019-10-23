@@ -10,7 +10,6 @@ lengthpsi=4;
 for freq=100:1000:5100
     tic
     for n=1:p.sections-1
-        tic
         for psi=0:2*pi/lengthpsi:2*pi
             
             Mt = p.omega*p.R1/p.c ;
@@ -23,7 +22,6 @@ for freq=100:1000:5100
             
             i_psi = i_psi + 1;
         end
-        toc
         for i_psi=1:lengthpsi-1
             fun_psi_SS(i_psi) = 2*pi/lengthpsi*(freqratio(i_psi,i_freq,i_sect-1)*Spp_SS(i_psi,i_freq,i_sect-1)+freqratio(i_psi+1,i_freq,i_sect-1)*Spp_SS(i_psi+1,i_freq,i_sect-1));
             fun_psi_PS(i_psi) = 2*pi/lengthpsi*(freqratio(i_psi,i_freq,i_sect-1)*Spp_PS(i_psi,i_freq,i_sect-1)+freqratio(i_psi+1,i_freq,i_sect-1)*Spp_PS(i_psi+1,i_freq,i_sect-1));
