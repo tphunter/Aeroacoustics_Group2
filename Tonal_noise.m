@@ -7,24 +7,42 @@ p = Parameters();
 % %freq = real(a);
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
+theta = linspace(0, 2*pi,15);
+Pdir=[];
 P=[];
-mobj = 32;
-for m = 1:mobj
-    P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
-end
-      
-mobj = 32;
 P2 = [];
+for i=1:length(theta)
+Pdiri =[];
+mobj = 27;
 for m = 1:mobj
+    if i==1
+    P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
     P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+    end
+    Pdiri =[Pdiri ,sum(Get_P_mB(p,m, theta(i), p.phi,0.1))];
 end
+Pdir = [Pdir,20*log10(sum(abs(Pdiri))/2/10^-5)];
+end     
+% mobj = 27;
+% P2 = [];
+% for m = 1:mobj
+%     P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+% end
         
-
+figure(1)
 ax1 = subplot(1,2,1);
 stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
 ax2 = subplot(1,2,2);
 stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
 linkaxes([ax1,ax2],'y');
+sgtitle('Noise Power vs Frequency')
+xlabel(ax1, 'Frequency')
+ylabel(ax1, 'Noise Power [dB]')
+xlabel(ax2, 'Frequency')
+ylabel(ax2, 'Noise Power [dB]')
+
+figure(2)
+polarplot(theta,Pdir)
 
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;
