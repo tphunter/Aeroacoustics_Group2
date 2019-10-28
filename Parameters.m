@@ -66,7 +66,6 @@ p.tau_w_PS = data_cell{1,18};
 
 p.gamma = asin(p.cl./p.cd);
 p.chord=p.c_R*p.R1;
-p.k_x=p.omega/p.V; %why?
 
 %% TONAL
 
@@ -76,6 +75,5 @@ p.k_x=p.omega/p.V; %why?
 p.U_c=0.7*p.V; %correct
 p.u_tau=1; 
 p.C_f=0.0089;
-p.k_y = 1;
 p.b=1/2.1; %correct
 end
