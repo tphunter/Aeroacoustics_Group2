@@ -1,6 +1,7 @@
 clc;
 clear;
 warning('off','all');
+addpath('Functions')
 p = Parameters();
 i_psi = 2; 
 i_freq = 1;
@@ -40,9 +41,12 @@ Spp_freq=1/(2*pi)*Spp_freq_rad;
 pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
 pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
 
-index=1;
+index=2;
+SPL(1)=0;
+OASPL=0;
 for freqSPL=100:10:4990
     SPL(index)=20*log10(sqrt(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10))/(2E-5));
+    OASPL=OASPL+5*(SPL(index)-SPL(index-1));
     index=index+1;
 end
 freqSPL=100:10:4990;
@@ -51,3 +55,5 @@ figure(1)
 plot(freqSPL,SPL)
 xlabel('Frequency (Hz)')
 ylabel('SPL (dB)')
+
+OASPL
