@@ -2,7 +2,7 @@ clc;
 clear;
 warning('off','all');
 p = Parameters();
-i_psi = 2;
+i_psi = 2; 
 i_freq = 1;
 i_sect=2;
 lengthpsi=4;
