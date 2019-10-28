@@ -11,7 +11,7 @@ fclose(fid);
 
 %% POSITION
 
-p.R_0 = 1;
+p.R_0 = 100;
 p.theta = pi/4;
 p.cpcv=1.4;
 p.phi = pi/4;
