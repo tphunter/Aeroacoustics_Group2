@@ -46,7 +46,6 @@ SPL(1)=0;
 OASPL=0;
 for freqSPL=100:10:4990
     SPL(index)=20*log10(sqrt(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10))/(2E-5));
-    OASPL=OASPL+5*(SPL(index)-SPL(index-1));
     index=index+1;
 end
 freqSPL=100:10:4990;
@@ -56,4 +55,9 @@ plot(freqSPL,SPL)
 xlabel('Frequency (Hz)')
 ylabel('SPL (dB)')
 
-OASPL
+insidelog=0;
+for index=1:length(SPL)
+    insidelog=insidelog+10^SPL(index);
+end
+
+OASPL=10*log10(insidelog)
