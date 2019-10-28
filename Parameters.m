@@ -73,10 +73,9 @@ p.k_x=p.omega/p.V;
 
 
 %% BROADBAND
-p.U_c=0.7*p.V;
-p.u_tau=1;
+p.U_c=0.7*p.V; %correct
+p.u_tau=1; 
 p.C_f=1;
 p.k_y = 1;
-p.beta = 1;
-p.b=1/2.1;
+p.b=1/2.1; %correct
 end
