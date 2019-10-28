@@ -30,12 +30,12 @@ for freqnondop=100:1000:5100
         end
         i_psi = i_psi + 1;
     end
-    for i_psi=1:length(psi)-1
-        fun_psi_SS(i_psi) = 2*pi/lengthpsi*freqratio*(Spp_SS(i_psi,i_freq)+Spp_SS(i_psi+1,i_freq));
-        fun_psi_PS(i_psi) = 2*pi/lengthpsi*freqratio*(Spp_PS(i_psi,i_freq)+Spp_PS(i_psi+1,i_freq));
+    for i_psi=1:lengthpsi-1
+        Fun_psi_SS(i_psi) = 2*pi/lengthpsi*freqratio*(Spp_SS(i_psi,i_freq)+Spp_SS(i_psi+1,i_freq));
+        Fun_psi_PS(i_psi) = 2*pi/lengthpsi*freqratio*(Spp_PS(i_psi,i_freq)+Spp_PS(i_psi+1,i_freq));
     end
-    Spp_SS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*sum(fun_psi_SS);
-    Spp_PS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*sum(fun_psi_PS);
+    Spp_SS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*sum(Fun_psi_SS);
+    Spp_PS_sect_freq(i_freq,i_sect) = p.B/(2*pi)*sum(Fun_psi_PS);
     
     Spp_sect_freq(i_freq,i_sect)=Spp_SS_sect_freq(i_freq,i_sect)+Spp_PS_sect_freq(i_freq,i_sect-1);
     Spp_freq_rad(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect)+Spp_sect_freq(i_freq,i_sect+1));
