@@ -14,7 +14,7 @@ fclose(fid);
 p.R_0 = 1;
 p.theta = pi/4;
 p.cpcv=1.4;
-p.phi = 0;
+p.phi = pi/4;
 p.pref = 2E-5;
 p.x = p.R_0*sin(p.phi)*cos(p.theta);
 p.y = p.R_0*sin(p.phi)*sin(p.theta);
