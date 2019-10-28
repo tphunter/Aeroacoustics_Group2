@@ -4,7 +4,7 @@ warning('off','all');
 addpath('Functions')
 p = Parameters();
 lengthpsi=4;
-theta = linspace(0, 2*pi,8);
+theta = linspace(0, 2*pi,15);
 Pdir=[];
 P=[];
 P2 = [];
@@ -78,7 +78,8 @@ figure(1)
 polarplot(theta,OASPL,'r')
 hold on
 polarplot(theta,Pdir,'g')
-polarplot(theta,10*log10(10^(Pdir/10)+10^(OASPL/10)),'b')
+hold on
+polarplot(theta,10.*log10(10.^(Pdir./10)+10.^(OASPL./10)),'b')
 
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;
