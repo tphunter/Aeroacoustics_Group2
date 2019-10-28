@@ -73,7 +73,5 @@ p.chord=p.c_R*p.R1;
 
 %% BROADBAND
 p.U_c=0.7*p.V; %correct
-p.u_tau=1; 
-p.C_f=0.0089;
 p.b=1/2.1; %correct
 end
