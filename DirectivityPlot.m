@@ -1,20 +1,65 @@
 clc;
 clear;
 warning('off','all');
-%% Tonal Noise Functions
+addpath('Functions')
 p = Parameters();
-% m = 2000;
-% a = Get_P_mB(p,m);
-% freq = abs(real(a));
-% ampl = abs(imag(a));
-% %freq = real(a);
-% %ampl = imag(a);
-% plot( freq, ampl , 'x')
-theta = linspace(0, 2*pi,15);
+lengthpsi=4;
+theta = linspace(0, 2*pi,8);
 Pdir=[];
 P=[];
 P2 = [];
+
+%% MAIN LOOP
+tic
 for i=1:length(theta)
+
+%% BROADBAND
+
+i_psi = 2; 
+i_freq = 1;
+i_sect=2;
+p.theta=theta(i);
+for freq=100:1000:5100
+    for n=1:p.sections-1
+        for psi=0:2*pi/lengthpsi:2*pi
+            
+            Mt = p.omega*p.R1/p.c ;
+            Mz = p.Mach;
+            freqratio = 1 + Mt*sin(p.theta)*sin(psi)/(sqrt(1-Mz^2*sin(p.theta)^2));
+            Spp_SS(i_psi,i_freq,i_sect-1) = Spp_SS_fun(p,n,freq,psi);
+            Spp_PS(i_psi,i_freq,i_sect-1) = Spp_PS_fun(p,n,freq,psi);
+            
+            i_psi = i_psi + 1;
+        end
+        for i_psi=1:lengthpsi-1
+            fun_psi_SS(i_psi) = 2*pi/lengthpsi*(freqratio*Spp_SS(i_psi,i_freq,i_sect-1)+freqratio*Spp_SS(i_psi+1,i_freq,i_sect-1));
+            fun_psi_PS(i_psi) = 2*pi/lengthpsi*(freqratio*Spp_PS(i_psi,i_freq,i_sect-1)+freqratio*Spp_PS(i_psi+1,i_freq,i_sect-1));
+        end    
+        Spp_SS_sect_freq(i_freq,i_sect-1) = p.B/(2*pi)*sum(fun_psi_SS);
+        Spp_PS_sect_freq(i_freq,i_sect-1) = p.B/(2*pi)*sum(fun_psi_PS);
+            
+        Spp_sect_freq(i_freq,i_sect-1)=Spp_SS_sect_freq(i_freq,i_sect-1)+Spp_PS_sect_freq(i_freq,i_sect-1);
+        i_sect=i_sect+1;
+    end
+    Spp_freq_rad(i_freq)=0.259/2*(Spp_sect_freq(i_freq,i_sect-2)+Spp_sect_freq(i_freq,i_sect-3));
+    i_freq=i_freq+1;
+end
+
+freqSpp=100:1000:5100;
+Spp_freq=1/(2*pi)*Spp_freq_rad;
+pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
+pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
+
+index=1;
+for freqSPL=100:10:4990
+    SPL(index)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10)))/(2E-5));
+    index=index+1;
+end
+freqSPL=100:10:4990;
+
+OASPL(i)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
+
+%% TONAL
 Pdiri =[];
 mobj = 27;
 for m = 1:mobj
@@ -25,27 +70,15 @@ for m = 1:mobj
     Pdiri =[Pdiri ,sum(Get_P_mB(p,m, theta(i), p.phi,0.1))];
 end
  Pdir = [Pdir,20*log10(sum(abs(Pdiri))/2/10^-5)];
-end     
-% mobj = 27;
-% P2 = [];
-% for m = 1:mobj
-%     P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
-% end
-        
-figure(1)
-ax1 = subplot(1,2,1);
-stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
-ax2 = subplot(1,2,2);
-stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
-linkaxes([ax1,ax2],'y');
-sgtitle('Noise Power vs Frequency')
-xlabel(ax1, 'Frequency')
-ylabel(ax1, 'Noise Power [dB]')
-xlabel(ax2, 'Frequency')
-ylabel(ax2, 'Noise Power [dB]')
+end
+toc
 
-figure(2)
-polarplot(theta,Pdir)
+%% DIRECTIVITY PLOTS
+figure(1)
+polarplot(theta,OASPL,'r')
+hold on
+polarplot(theta,Pdir,'g')
+polarplot(theta,10*log10(10^(Pdir/10)+10^(OASPL/10)),'b')
 
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;

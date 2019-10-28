@@ -3,11 +3,15 @@ clear;
 warning('off','all');
 addpath('Functions')
 p = Parameters();
+lengthpsi=4;
+theta = linspace(0, 2*pi,15);
+
+
+for i=1:length(theta)
 i_psi = 2; 
 i_freq = 1;
 i_sect=2;
-lengthpsi=4;
-
+p.theta=theta(i);
 for freq=100:1000:5100
     tic
     for n=1:p.sections-1
@@ -41,23 +45,21 @@ Spp_freq=1/(2*pi)*Spp_freq_rad;
 pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
 pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
 
-index=2;
-SPL(1)=0;
-OASPL=0;
+index=1;
 for freqSPL=100:10:4990
-    SPL(index)=20*log10(sqrt(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10))/(2E-5));
+    SPL(index)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10)))/(2E-5));
     index=index+1;
 end
 freqSPL=100:10:4990;
+
+OASPL(i)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
+end
+
 
 figure(1)
 plot(freqSPL,SPL)
 xlabel('Frequency (Hz)')
 ylabel('SPL (dB)')
 
-insidelog=0;
-for index=1:length(SPL)
-    insidelog=insidelog+10^SPL(index);
-end
-
-OASPL=10*log10(insidelog)
+figure(2)
+polarplot(theta,OASPL)

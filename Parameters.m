@@ -11,7 +11,7 @@ fclose(fid);
 
 %% POSITION
 
-p.R_0 = 100;
+p.R_0 = 1;
 p.theta = pi/4;
 p.cpcv=1.4;
 p.phi = pi/4;
@@ -72,6 +72,6 @@ p.chord=p.c_R*p.R1;
 
 
 %% BROADBAND
-p.U_c=0.7*p.V; %correct
+p.U_c=0.6*p.V; %correct
 p.b=1/2.1; %correct
 end
