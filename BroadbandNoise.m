@@ -1,6 +1,7 @@
 clc;
 clear;
 warning('off','all');
+addpath('Functions')  
 p = Parameters();
 i_psi = 2;
 i_freq = 1;
