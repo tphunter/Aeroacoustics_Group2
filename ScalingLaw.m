@@ -6,10 +6,10 @@ p = Parameters();
 lengthpsi=4;
 theta = linspace(0, 2*pi,15);
 
-R = p.R_0;
+R_0 = p.R_0;
 n = 1;
 
-for R = R:10:101
+for R = R_0:20:101
     p.R_0 = R;
     for i=1:length(theta)
     i_psi = 2; 
@@ -49,25 +49,20 @@ for R = R:10:101
     pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
     pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
 
-    index=1;
-    for freqSPL=100:10:4990
-        SPL(index)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10)))/(2E-5));
-        index=index+1;
-    end
     freqSPL=100:10:4990;
 
-    OASPL(i)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
+    OASPL=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
     end
     RList(n) = R;
-    OASPLList(n) = OASPL(1);
+    OASPLList(n) = OASPL;
     n = n + 1;
     
 end
 
-Diam = p.diam;
+Diam_0 = p.diam;
 n = 1;
 
-for Diam = Diam:1:11
+for Diam = Diam_0:2:11
     p.diam = Diam;
     for i=1:length(theta)
     i_psi = 2; 
@@ -107,24 +102,21 @@ for Diam = Diam:1:11
     pol_Spp_freq=polyfit(freqSpp,Spp_freq,length(freqSpp)-1);
     pol_Spp_freq_fun=@(m) pol_Spp_freq(1).*m.^5+pol_Spp_freq(2).*m.^4+pol_Spp_freq(3).*m.^3+pol_Spp_freq(4).*m.^2+pol_Spp_freq(5).*m.^2+pol_Spp_freq(6);
 
-    index=1;
-    for freqSPL=100:10:4990
-        SPL(index)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,freqSPL,freqSPL+10)))/(2E-5));
-        index=index+1;
-    end
+
     freqSPL=100:10:4990;
 
-    OASPL(i)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
+    OASPL=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
     end
     DiamList(n) = Diam;
-    OASPLList2(n) = OASPL(1);
+    OASPLList2(n) = OASPL;
     n = n + 1;
     
 end
 
 %%
 
-subplot(1,2,1)
+
 plot(RList,OASPLList,'-')
-subplot(1,2,2)
+
+%%
 plot(DiamList,OASPLList2,'-')
