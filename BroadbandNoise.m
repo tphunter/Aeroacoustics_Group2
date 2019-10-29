@@ -12,7 +12,7 @@ i_psi = 2;
 i_freq = 1;
 i_sect=2;
 p.theta=theta(i);
-for freq=100:1000:5100
+for freqnondop=100:1000:5100
     tic
     for n=1:p.sections-1
         for psi=0:2*pi/lengthpsi:2*pi
@@ -20,6 +20,7 @@ for freq=100:1000:5100
             Mt = p.omega*p.R1/p.c ;
             Mz = p.Mach;
             freqratio = 1 + Mt*sin(p.theta)*sin(psi)/(sqrt(1-Mz^2*sin(p.theta)^2));
+            freq=freqratio*freqnondop;
             Spp_SS(i_psi,i_freq,i_sect-1) = Spp_SS_fun(p,n,freq,psi);
             Spp_PS(i_psi,i_freq,i_sect-1) = Spp_PS_fun(p,n,freq,psi);
             
