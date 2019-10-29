@@ -9,7 +9,7 @@ theta = linspace(0, 2*pi,15);
 R_0 = p.R_0;
 n = 1;
 
-for R = R_0:10:101
+for R = 10:10:101
     p.R_0 = R;
     
 
@@ -78,7 +78,7 @@ figure(1)
 ax1 = subplot(1,2,1);
 plot(RList,OASPLList,'-')
 ax2 = subplot(1,2,2);
-plot(DiamList,OASPLList2,'-')
+plot(RadList,OASPLList2,'-')
 linkaxes([ax1,ax2],'y');
 
 xlabel(ax1, 'Observer Distance')
