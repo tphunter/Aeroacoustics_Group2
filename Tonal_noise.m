@@ -10,7 +10,7 @@ p = Parameters();
 % %freq = real(a);
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
-theta = linspace(0, 2*pi,15);
+theta = linspace(0, 2*pi,30);
 Pdir=[];
 P=[];
 P2 = [];
