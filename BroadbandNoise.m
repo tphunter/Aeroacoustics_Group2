@@ -6,7 +6,6 @@ p = Parameters();
 lengthpsi=4;
 theta = linspace(0, 2*pi,15);
 
-
 for i=1:length(theta)
 i_psi = 2; 
 i_freq = 1;
