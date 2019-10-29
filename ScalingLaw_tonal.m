@@ -37,12 +37,12 @@ for R = R_0:10:101
     
 end
 
-Diam_0 = p.diam;
+Rad_0 = p.R1;
 n = 1;
 
 
-for Diam = Diam_0:1:11
-    p.diam = Diam;
+for Rad = Rad_0:1:11
+    p.R1 = Rad;
     
 
     theta = linspace(0, 2*pi,15);
@@ -64,7 +64,7 @@ for Diam = Diam_0:1:11
 
 
  
-    DiamList(n) = Diam;
+    RadList(n) = Rad;
     OASPLList2(n) = P_OASPL;
     n = n + 1;
     
