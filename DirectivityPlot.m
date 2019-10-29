@@ -4,7 +4,7 @@ warning('off','all');
 addpath('Functions')
 p = Parameters();
 lengthpsi=4;
-theta = linspace(0, 2*pi,4);
+theta = linspace(0, 2*pi,15);
 Pdir=[];
 P=[];
 P2 = [];
