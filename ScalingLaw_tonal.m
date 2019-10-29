@@ -74,17 +74,17 @@ end
 
 
 
-figure(1)
-ax1 = subplot(1,2,1);
-plot(RList,OASPLList,'-')
-ax2 = subplot(1,2,2);
-plot(RadList,OASPLList2,'-')
-linkaxes([ax1,ax2],'y');
 
-xlabel(ax1, 'Observer Distance')
-ylabel(ax1, 'Noise Power [dB]')
-xlabel(ax2, 'Rotor Diameter')
-ylabel(ax2, 'Noise Power [dB]')
+plot(RList,OASPLList,'-')
+xlabel('Observer Distance')
+ylabel('Noise Power [dB]')
+%%
+plot(RadList,OASPLList2,'-')
+xlabel('Rotor Diameter')
+ylabel('Noise Power [dB]')
+
+%%
+
 
 
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)

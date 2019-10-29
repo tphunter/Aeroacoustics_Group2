@@ -112,7 +112,11 @@ end
 %%
 
 figure(1)
+p = polyfit(RList,OASPLList,1);
+y2 = polyval(p,RList);
 plot(RList,OASPLList,'-')
+hold on
+plot(p,y2,'-')
 xlabel('Distance to observer(m)')
 ylabel('OASPL (dB)')
 
