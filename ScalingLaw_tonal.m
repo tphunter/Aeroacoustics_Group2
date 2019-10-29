@@ -6,10 +6,10 @@ p = Parameters();
 lengthpsi=4;
 theta = linspace(0, 2*pi,15);
 
-R = p.R_0;
+R_0 = p.R_0;
 n = 1;
 
-for R = R:10:101
+for R = R_0:10:101
     p.R_0 = R;
     
 
@@ -37,11 +37,11 @@ for R = R:10:101
     
 end
 
-Diam = p.diam;
+Diam_0 = p.diam;
 n = 1;
 
 
-for Diam = Diam:1:11
+for Diam = Diam_0:1:11
     p.diam = Diam;
     
 
