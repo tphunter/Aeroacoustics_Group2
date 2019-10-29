@@ -7,9 +7,9 @@ lengthpsi=4;
 theta = linspace(0, 2*pi,15);
 
 R_0 = p.R_0;
-n = 1;
+n_iter = 1;
 
-for R = R_0:20:101
+for R = R_0:25:100
     p.R_0 = R;
     for i=1:length(theta)
     i_psi = 2; 
@@ -53,16 +53,15 @@ for R = R_0:20:101
 
     OASPL=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
     end
-    RList(n) = R;
-    OASPLList(n) = OASPL;
-    n = n + 1;
+    RList(n_iter) = R;
+    OASPLList(n_iter) = OASPL;
+    n_iter = n_iter + 1;
     
 end
 
 Diam_0 = p.diam;
-n = 1;
-
-for Diam = Diam_0:2:11
+n_iter = 1;
+for Diam = Diam_0:5:20
     p.diam = Diam;
     for i=1:length(theta)
     i_psi = 2; 
@@ -107,9 +106,9 @@ for Diam = Diam_0:2:11
 
     OASPL=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
     end
-    DiamList(n) = Diam;
-    OASPLList2(n) = OASPL;
-    n = n + 1;
+    DiamList(n_iter) = Diam;
+    OASPLList2(n_iter) = OASPL;
+    n_iter = n_iter + 1;
     
 end
 
