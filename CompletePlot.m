@@ -1,24 +1,38 @@
 clc;
 clear;
 warning('off','all');
-addpath('Functions')
+%% Tonal Noise Functions
 p = Parameters();
-lengthpsi=4;
-theta = linspace(0, 2*pi,4);
+% m = 2000;
+% a = Get_P_mB(p,m);
+% freq = abs(real(a));
+% ampl = abs(imag(a));
+% %freq = real(a);
+% %ampl = imag(a);
+% plot( freq, ampl , 'x')
+
 Pdir=[];
 P=[];
 P2 = [];
+mobj = 27;
 
-%% MAIN LOOP
-tic
-for i=1:length(theta)
+for m = 1:mobj
+    if i==1
+    P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
+    P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+    end
+end  
+% mobj = 27;
+% P2 = [];
+% for m = 1:mobj
+%     P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+% end
 
-%% BROADBAND
+lengthpsi=4;
 
 i_psi = 2; 
 i_freq = 1;
 i_sect=2;
-p.theta=theta(i);
 for freqnondop=100:1000:5100
     tic
     for n=1:p.sections-1
@@ -60,29 +74,24 @@ for freqSPL=100:10:4990
 end
 freqSPL=100:10:4990;
 
-OASPL(i)=20*log10(sqrt(abs(integral(pol_Spp_freq_fun,100,5000)))/(2E-5));
-
-%% TONAL
-Pdiri =[];
-mobj = 27;
-for m = 1:mobj
-    if i==1
-    P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
-    P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
-    end
-    Pdiri =[Pdiri ,sum(Get_P_mB(p,m, theta(i), p.phi,0.1))];
-end
- Pdir = [Pdir,20*log10(sum(abs(Pdiri))/2/10^-5)];
-end
-toc
-
-%% DIRECTIVITY PLOTS
 figure(1)
-polarplot(theta,OASPL,'r')
+
+ax1 = subplot(1,2,1);
+stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
 hold on
-polarplot(theta,Pdir,'g')
+plot(freqSPL,SPL)
+ax2 = subplot(1,2,2);
+stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
 hold on
-polarplot(theta,10.*log10(10.^(Pdir./10)+10.^(OASPL./10)),'b')
+plot(freqSPL,SPL)
+linkaxes([ax1,ax2],'y');
+sgtitle('Noise Power vs Frequency')
+xlabel(ax1, 'Frequency')
+ylabel(ax1, 'Noise Power [dB]')
+xlabel(ax2, 'Frequency')
+ylabel(ax2, 'Noise Power [dB]')
+
+
 
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;
