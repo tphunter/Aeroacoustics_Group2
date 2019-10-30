@@ -17,10 +17,8 @@ P2 = [];
 mobj = 27;
 
 for m = 1:mobj
-    if i==1
     P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
     P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
-    end
 end  
 % mobj = 27;
 % P2 = [];
@@ -75,21 +73,21 @@ end
 freqSPL=100:10:4990;
 
 figure(1)
+stem(linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
+hold on
+plot(freqSPL,SPL)
+title('Noise Power vs Frequency')
+xlabel('Frequency')
+ylabel('Noise Power [dB]')
 
-ax1 = subplot(1,2,1);
-stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
+
+figure(2)
+stem(linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
 hold on
 plot(freqSPL,SPL)
-ax2 = subplot(1,2,2);
-stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
-hold on
-plot(freqSPL,SPL)
-linkaxes([ax1,ax2],'y');
-sgtitle('Noise Power vs Frequency')
-xlabel(ax1, 'Frequency')
-ylabel(ax1, 'Noise Power [dB]')
-xlabel(ax2, 'Frequency')
-ylabel(ax2, 'Noise Power [dB]')
+title('Noise Power vs Frequency')
+xlabel('Frequency')
+ylabel('Noise Power [dB]')
 
 
 

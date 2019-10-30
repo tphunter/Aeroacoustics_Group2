@@ -60,6 +60,8 @@ figure(1)
 plot(freqSPL,SPL)
 xlabel('Frequency (Hz)')
 ylabel('SPL (dB)')
+title('Broadband noise SPL vs Noise frequency')
 
 figure(2)
 polarplot(theta,OASPL)
+title('Directivity plot of the broadband noise')
