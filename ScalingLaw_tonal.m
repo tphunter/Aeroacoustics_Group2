@@ -9,39 +9,39 @@ theta = linspace(0, 2*pi,15);
 R_0 = p.R_0;
 n = 1;
 
-for R = 10:10:101
-    p.R_0 = R;
-    
+% for R = 10:10:101
+%     p.R_0 = R;
+%     
+% 
+% 	theta = linspace(0, 2*pi,15);
+%     P_OASPL=[];
+% 	P=[];
+% 	P2 = [];
+% 	for i=1
+% 	mobj = 27;
+% 	for m = 1:mobj
+% 		if i==1
+% 		%P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
+% 		P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
+% 		end
+% 	end
+% 	 P_OASPL = [P_OASPL,20*log10(sum(abs(P2))/2/10^-5)];
+% 	end     
+% 
+% 	
+% 
+%     
+%     RList(n) = R;
+%     OASPLList(n) = P_OASPL;
+%     n = n + 1;
+%     
+% end
+% 
+% Rad_0 = p.R1;
+% n = 1;
 
-	theta = linspace(0, 2*pi,15);
-    P_OASPL=[];
-	P=[];
-	P2 = [];
-	for i=1
-	mobj = 27;
-	for m = 1:mobj
-		if i==1
-		%P = [P ,sum(Get_P_mB(p,m, p.theta, p.phi,0.1))];
-		P2 = [P2 ,sum(Get_P_mB(p,m, p.theta, p.phi,0))];
-		end
-	end
-	 P_OASPL = [P_OASPL,20*log10(sum(abs(P2))/2/10^-5)];
-	end     
 
-	
-
-    
-    RList(n) = R;
-    OASPLList(n) = P_OASPL;
-    n = n + 1;
-    
-end
-
-Rad_0 = p.R1;
-n = 1;
-
-
-for Rad = Rad_0:1:11
+for Rad = 0.1:0.1:1
     p.R1 = Rad;
     
 
@@ -75,13 +75,13 @@ end
 
 
 
-plot(RList,OASPLList,'-')
-xlabel('Observer Distance')
-ylabel('Noise Power [dB]')
+% plot(RList,OASPLList,'-')
+% xlabel('Observer Distance')
+% ylabel('Noise Power [dB]')
 %%
 plot(RadList,OASPLList2,'-')
 xlabel('Rotor Diameter')
-ylabel('Noise Power [dB]')
+ylabel('SPL [dB]')
 
 %%
 
