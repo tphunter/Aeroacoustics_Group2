@@ -5,7 +5,7 @@
 %all mass in [kg]
 function p = Parameters()
 
-fid = fopen('Data2.txt', 'rt');
+fid = fopen('Data1.txt', 'rt');
 data_cell = textscan(fid, '%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f', 'Delimiter',' ');
 fclose(fid);
 
@@ -28,7 +28,7 @@ p.k = [0,0,1];
 
 
 %% INPUT PARAMETERS
-p.V= 25;
+p.V= 18;
 p.cpcv=1.4;
 p.Rgas=287;
 p.press=101325;
@@ -40,7 +40,7 @@ p.dynvis=0.000018;
 p.kinvis=p.dynvis/p.density;
 p.diam=0.3556;
 p.R1=p.diam*0.5;
-p.omega= (pi*8000)/30;
+p.omega= (pi*6000)/30;
 p.B=2;
 p.sections=30;
 

@@ -76,18 +76,18 @@ figure(1)
 stem(linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
 hold on
 plot(freqSPL,SPL)
-title('Noise Power vs Frequency')
-xlabel('Frequency')
-ylabel('Noise Power [dB]')
+title('SPL vs Frequency')
+xlabel('Frequency (Hz)')
+ylabel('SPL [dB]')
 
 
 figure(2)
 stem(linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
 hold on
 plot(freqSPL,SPL)
-title('Noise Power vs Frequency')
-xlabel('Frequency')
-ylabel('Noise Power [dB]')
+title('SPL vs Frequency')
+xlabel('Frequency (Hz)')
+ylabel('SPL [dB]')
 
 
 
