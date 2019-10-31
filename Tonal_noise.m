@@ -10,7 +10,7 @@ p = Parameters();
 % %freq = real(a);
 % %ampl = imag(a);
 % plot( freq, ampl , 'x')
-theta = linspace(0, 2*pi,30);
+theta = linspace(0, 2*pi,15);
 Pdir=[];
 P=[];
 P2 = [];
@@ -38,15 +38,15 @@ stem(ax1 , linspace(200,mobj*200,length(P)),20*log10(abs(P2)/2/10^-5))
 ax2 = subplot(1,2,2);
 stem(ax2, linspace(200,mobj*200,length(P)),20*log10(abs(P)/2/10^-5))
 linkaxes([ax1,ax2],'y');
-sgtitle('Noise Power vs Frequency')
-xlabel(ax1, 'Frequency')
-ylabel(ax1, 'Noise Power [dB]')
-xlabel(ax2, 'Frequency')
-ylabel(ax2, 'Noise Power [dB]')
+title('SPL vs Frequency')
+xlabel(ax1, 'Frequency (Hz)')
+ylabel(ax1, 'SPL [dB]')
+xlabel(ax2, 'Frequency (Hz)')
+ylabel(ax2, 'SPL [dB]')
 
 figure(2)
 polarplot(theta,Pdir)
-
+title('Directivity plot of tonal noise')
 function P_mBfinal = Get_P_mB(p,m, theta, phi,k)
 Omega = p.omega;
 %theta = p.theta;
